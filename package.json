@@ -1,0 +1,38 @@
+{
+  "name": "halostatsbot-mixer",
+  "version": "1.0.0",
+  "description": "HaloStatsBot for Mixer, display Halo 5 stats in the Mixer Chat.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "start": "tsc && node ./dist/index.js",
+    "build": "cd src && tsc && node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicmeisteR/HaloStatsBot-Mixer.git"
+  },
+  "keywords": [
+    "Halo",
+    "API.",
+    "REST",
+    "Mixer"
+  ],
+  "author": "Nicolaas Nel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NicmeisteR/HaloStatsBot-Mixer/issues"
+  },
+  "homepage": "https://github.com/NicmeisteR/HaloStatsBot-Mixer#readme",
+  "dependencies": {
+    "@mixer/chat-client-websocket": "^1.1.0",
+    "@mixer/client-node": "^3.5.0",
+    "@types/node": "^13.1.6",
+    "@types/request": "^2.48.4",
+    "dotenv": "^8.2.0",
+    "find-config": "^1.0.0",
+    "typescript": "^3.7.4",
+    "ws": "^7.2.1"
+  }
+}
