@@ -1,4 +1,5 @@
 // Imports
+import { get } from './functions/helpers';
 const Mixer = require('@mixer/client-node');
 const ws = require('ws');
 require('dotenv').config({ path: require('find-config')('.env') });
@@ -49,9 +50,12 @@ function createChatSocket (userId: number, channelId: number, endpoints: string[
     });
 
     // React to our !pong command
-    socket.on('ChatMessage', (data: any) => {
+    socket.on('ChatMessage', async (data: any) => {
         if (data.message.message[0].data.toLowerCase().startsWith('!stats')) {
-            socket.call('msg', [`@${data.user_name} STATS HERE!`]);
+            let message = await get("May Hamn", "Ranks", process.env.TOKEN);
+            console.log(message);
+            
+            socket.call('msg', [`@${data.user_name} ${JSON.stringify(message)}`]);
         }
     });
 
