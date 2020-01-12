@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var request = require("request");
-function get(gamertag, query, token) {
+function get(gamertag, query, token, data, socket) {
     return __awaiter(this, void 0, void 0, function () {
         var options;
         return __generator(this, function (_a) {
@@ -55,9 +55,14 @@ function get(gamertag, query, token) {
             request(options, function (error, response, body) {
                 if (error)
                     throw new Error(error);
-                return new Promise(function (resolve, reject) {
-                    return resolve(body);
-                });
+                if (query.toLowerCase() === "arena") {
+                    socket.call('msg', ["\n                @" + data.user_name + " \n                Spartan Rank: " + body.SpartanRank + ", \n                Total Kills: " + body.Stats.TotalKills + ",\n                Total Deaths: " + body.Stats.TotalDeaths + ",\n                Win/Loss: " + (body.Stats.TotalGamesWon / body.Stats.TotalGamesLost).toFixed(2) + "\n            "]);
+                }
+                else if (query.toLowerCase() === "ranks") {
+                    body.forEach(function (item) {
+                        socket.call('msg', ["\n                    @" + data.user_name + " \n                    Playlist: " + item.Name + ", \n                    Total Kills: " + item.TotalKills + ",\n                    Total Deaths: " + item.TotalDeaths + ",\n                    Win/Loss: " + (item.TotalGamesWon / item.TotalGamesLost).toFixed(2) + ",\n                    Designation: " + item.Designation.name + "\n                "]);
+                    });
+                }
             });
             return [2 /*return*/];
         });

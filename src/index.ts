@@ -46,16 +46,16 @@ function createChatSocket (userId: number, channelId: number, endpoints: string[
 
     // Greet a joined user
     socket.on('UserJoin', (data: any) => {
-        socket.call('msg', [`Hi ${data.username}! I'm HaloStatsBot! Write !stats and I will send back Halo 5 stats!`]);
+        socket.call('msg', [`Hi ${data.username}! I'm HaloStatsBot! Write !stats or !ranks and I will send back Halo 5 stats!`]);
     });
 
     // React to our !pong command
     socket.on('ChatMessage', async (data: any) => {
         if (data.message.message[0].data.toLowerCase().startsWith('!stats')) {
-            let message = await get("May Hamn", "Ranks", process.env.TOKEN);
-            console.log(message);
-            
-            socket.call('msg', [`@${data.user_name} ${JSON.stringify(message)}`]);
+            await get("May Hamn", "Arena", process.env.TOKEN, data, socket);
+        }
+        else if (data.message.message[0].data.toLowerCase().startsWith('!ranks')) {
+            await get("May Hamn", "Ranks", process.env.TOKEN, data, socket);
         }
     });
 

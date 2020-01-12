@@ -79,22 +79,25 @@ function createChatSocket(userId, channelId, endpoints, authkey) {
     var socket = new Mixer.Socket(ws, endpoints).boot();
     // Greet a joined user
     socket.on('UserJoin', function (data) {
-        socket.call('msg', ["Hi " + data.username + "! I'm HaloStatsBot! Write !stats and I will send back Halo 5 stats!"]);
+        socket.call('msg', ["Hi " + data.username + "! I'm HaloStatsBot! Write !stats or !ranks and I will send back Halo 5 stats!"]);
     });
     // React to our !pong command
     socket.on('ChatMessage', function (data) { return __awaiter(_this, void 0, void 0, function () {
-        var message;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!data.message.message[0].data.toLowerCase().startsWith('!stats')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, helpers_1.get("May Hamn", "Ranks", process.env.TOKEN)];
+                    return [4 /*yield*/, helpers_1.get("May Hamn", "Arena", process.env.TOKEN, data, socket)];
                 case 1:
-                    message = _a.sent();
-                    console.log(message);
-                    socket.call('msg', ["@" + data.user_name + " " + JSON.stringify(message)]);
-                    _a.label = 2;
-                case 2: return [2 /*return*/];
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 2:
+                    if (!data.message.message[0].data.toLowerCase().startsWith('!ranks')) return [3 /*break*/, 4];
+                    return [4 /*yield*/, helpers_1.get("May Hamn", "Ranks", process.env.TOKEN, data, socket)];
+                case 3:
+                    _a.sent();
+                    _a.label = 4;
+                case 4: return [2 /*return*/];
             }
         });
     }); });
